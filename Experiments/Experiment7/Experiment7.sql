@@ -68,7 +68,9 @@ LEFT JOIN Students s ON e.student_id = s.student_id;
 SELECT s.student_name, d.dept_name
 FROM Students s
 LEFT JOIN Departments d
-	ON s.dept_id = d.dept_id;
+    ON s.dept_id = d.dept_id
+LEFT JOIN Enrollment e
+    ON s.student_id = e.student_id;
 
 -- 5. Display all possible student-course combinations (CROSS JOIN).
 SELECT s.student_name, c.course_name 
