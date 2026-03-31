@@ -1,25 +1,21 @@
-# 📘 Worksheet 7 – SQL Joins Implementation
-
-## 👨‍🎓 Student Details
-
-* **Student Name:** Suyash
-* **UID:** 25MCI10054
-* **Branch:** MCA (AI & ML)
-* **Section/Group:** MAM-1 A
-* **Semester:** 2nd
-* **Date of Performance:** 31/03/2026
+* **Student Name:** Aradhya Sharma
+* **UID:** 25MCC20042
+* **Branch:** MCA (Cloud Computing & Devops)
+* **Section/Group:** MCC-101 A
+* **Semester:** 2
+* **Date of Performance:** 31-03-2026
 * **Subject Name:** Technical Training - I
 * **Subject Code:** 25CAP-652
 
 ---
 
-## 🎯 Aim
+## Aim
 
 Implementation of joins in PostgreSQL (inner join, left join, right join, self join and cross join)
 
 ---
 
-## 🛠️ Tools Used
+## Tools Used
 
 * PostgreSQL
 * pgAdmin
@@ -27,13 +23,13 @@ Implementation of joins in PostgreSQL (inner join, left join, right join, self j
 
 ---
 
-## 🎯 Objectives
+## Objectives
 
 Apply joins to a real-world database schema (e.g., Students, Courses, Enrollments, Departments)
 
 ---
 
-## 📖 Theory
+## Theory
 
 A JOIN in SQL is used to combine rows from two or more tables based on a related column between them. Joins are essential in relational databases because data is often stored in multiple tables to reduce redundancy and improve organization.
 
@@ -56,123 +52,102 @@ A JOIN in SQL is used to combine rows from two or more tables based on a related
 
 ---
 
-## ⚙️ Experiment Steps
+## Experiment Steps
 
 ### Step 0: Creating tables and inserting records
 
 ```sql id="s9u9pd"
-CREATE TABLE students ( 
-    student_id INT PRIMARY KEY, 
-    student_name VARCHAR(50), 
-    department_id INT 
-); 
+CREATE TABLE Departments (
+    dept_id INT PRIMARY KEY,
+    dept_name VARCHAR(100)
+);
 
-CREATE TABLE courses ( 
-    course_id INT PRIMARY KEY, 
-    course_name VARCHAR(50) 
-); 
+CREATE TABLE Students (
+    student_id INT PRIMARY KEY,
+    student_name VARCHAR(100),
+    dept_id INT,
+    FOREIGN KEY (dept_id) REFERENCES Departments(dept_id)
+);
 
-CREATE TABLE enrollments ( 
-    enroll_id INT PRIMARY KEY, 
-    student_id INT, 
-    course_id INT 
-); 
+CREATE TABLE Courses (
+    course_id INT PRIMARY KEY,
+    course_name VARCHAR(100)
+);
 
-CREATE TABLE departments ( 
-    department_id INT PRIMARY KEY, 
-    department_name VARCHAR(50)  
-); 
+CREATE TABLE Enrollment (
+    student_id INT,
+    course_id INT,
+    PRIMARY KEY (student_id, course_id),
+    FOREIGN KEY (student_id) REFERENCES Students(student_id),
+    FOREIGN KEY (course_id) REFERENCES Courses(course_id)
+);
 ```
+<img width="355" height="168" alt="image" src="https://github.com/user-attachments/assets/ca5b900e-837f-4a83-8a12-deafb5bdb847" />
 
-```sql id="1d76qk"
-INSERT INTO students VALUES 
-(1, 'Amit', 101), 
-(2, 'Neha', 102), 
-(3, 'Rahul', 101), 
-(4, 'Priya', 103), 
-(5, 'Karan', 102), 
-(6, 'sumit' , NULL); 
 
-SELECT * FROM students;
-```
-![Output](images/Students.jpg)
-```sql id="2s4ry3"
-INSERT INTO courses VALUES 
-(201, 'DBMS'), 
-(202, 'Machine Learning'), 
-(203, 'Web Development'), 
-(204, 'Data Structures'); 
+<img width="291" height="142" alt="image" src="https://github.com/user-attachments/assets/eddc7f65-4454-4a16-856f-a265bf1d29cb" />
 
-SELECT * FROM courses;
-```
-![Output](images/courses.jpg)
-```sql id="6b4rqn"
-INSERT INTO enrollments VALUES 
-(1, 1, 201), 
-(2, 1, 202), 
-(3, 2, 203), 
-(4, 3, 201), 
-(5, 4, 204); 
 
-SELECT * FROM enrollments;
-```
-![Output](images/enrollments.jpg)
-```sql id="kq8p35"
-INSERT INTO departments VALUES 
-(101, 'Computer Science'), 
-(102, 'Information Technology'), 
-(103, 'Artificial Intelligence'); 
+<img width="232" height="134" alt="image" src="https://github.com/user-attachments/assets/0684f52f-aea0-4449-b678-efc663a6c47d" />
 
-SELECT * FROM departments;
-```
-![Output](images/departments.jpg)
+
+<img width="291" height="118" alt="image" src="https://github.com/user-attachments/assets/b2516687-8a37-4b7e-9357-6f7275ee4723" />
+
 ---
 
 ### Step 1: Queries to list students with their enrolled courses (INNER JOIN)
 
 ```sql id="x4b0fs"
-SELECT s.student_id, s.student_name, c.course_name 
-FROM students s 
-INNER JOIN enrollments e ON s.student_id = e.student_id 
-INNER JOIN courses c ON e.course_id = c.course_id;
+SELECT s.student_id, s.student_name, c.course_name
+FROM Students s
+INNER JOIN Enrollment e ON s.student_id = e.student_id
+INNER JOIN Courses c ON e.course_id = c.course_id;
 ```
 ### Output 
-![Output](images/inner%20join.jpg)
+<img width="439" height="138" alt="image" src="https://github.com/user-attachments/assets/6f522440-5222-4e8b-b9e3-47c6c044aa7c" />
+
 ---
 
 ### Step 2:  Find students not enrolled in any course (LEFT JOIN). 
 
 ```sql id="nsd7v6"
-SELECT s.student_id, s.student_name 
-FROM students s 
-LEFT JOIN enrollments e ON s.student_id = e.student_id 
-WHERE e.course_id IS NULL;
+SELECT s.student_id, s.student_name
+FROM Students s
+LEFT JOIN Enrollment e ON s.student_id = e.student_id
+WHERE course_id IS NULL;
+
 ```
 ### Output 
-![Output](images/left%20join.jpg)
+<img width="287" height="89" alt="image" src="https://github.com/user-attachments/assets/3ba447e1-9c2a-4adf-9728-ef899c554fe1" />
+
 ---
 
 ### Step 3:  Display all courses with or without enrolled students (RIGHT JOIN).
 
 ```sql id="e7m3bb"
-SELECT s.student_name, c.course_name 
-FROM students s 
-RIGHT JOIN enrollments e ON s.student_id = e.student_id 
+SELECT s.student_name, c.course_name
+FROM students s
+RIGHT JOIN enrollment e ON s.student_id = e.student_id
 RIGHT JOIN courses c ON e.course_id = c.course_id;
 ```
 ### Output 
-![Output](images/Right%20join.jpg)
+<img width="351" height="136" alt="image" src="https://github.com/user-attachments/assets/fa2667e4-a726-4c0d-a8cf-11855bf6a77a" />
+
 ---
 
 ### Step 4: Show students with department info using SELF JOIN or multiple joins. 
 
 ```sql id="8yzn5j"
-SELECT s.student_id, s.student_name, d.department_name 
-FROM students s 
-JOIN departments d ON s.department_id = d.department_id;
+SELECT s.student_name, d.dept_name
+FROM Students s
+LEFT JOIN Departments d
+    ON s.dept_id = d.dept_id
+LEFT JOIN Enrollment e
+    ON s.student_id = e.student_id;
 ```
 ### Output 
-![Output](images/Multiple%20join.jpg)
+<img width="352" height="165" alt="image" src="https://github.com/user-attachments/assets/e4b75c4b-0b17-4e7a-a78f-53dae2806baa" />
+
 ---
 
 ### Step 5: Display all possible student-course combinations (CROSS JOIN). (Oracle, SAP, IBM, Microsoft) 
@@ -183,10 +158,11 @@ FROM students s
 CROSS JOIN courses c;
 ```
 ### Output 
-![Output](images/cross%20join.jpg)
+<img width="351" height="416" alt="image" src="https://github.com/user-attachments/assets/8bf46907-7add-4b6d-ad9a-2c194aea58cd" />
+
 ---
 
-## 📊 Learning Outcome
+## Learning Outcome
 
 * Join Understanding: I learned how to use different types of SQL joins to retrieve related data from multiple tables.
 * Practical Database Skills: I understood how real-world schemas such as Students, Courses, Enrollments, and Departments are related in a relational database.
@@ -196,6 +172,3 @@ CROSS JOIN courses c;
 
 ---
 
-## ✅ Result
-
-This experiment demonstrates how different SQL joins are used to combine and retrieve data from multiple tables in PostgreSQL.
