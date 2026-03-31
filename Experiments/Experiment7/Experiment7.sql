@@ -71,4 +71,6 @@ LEFT JOIN Departments d
 	ON s.dept_id = d.dept_id;
 
 -- 5. Display all possible student-course combinations (CROSS JOIN).
-SELECT * from Students cross join Courses;
+SELECT s.student_name, c.course_name 
+FROM students s 
+CROSS JOIN courses c;
