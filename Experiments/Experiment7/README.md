@@ -169,6 +169,5 @@ CROSS JOIN courses c;
 * Data Analysis Ability: I learned how to identify matching and non-matching records using INNER JOIN, LEFT JOIN, and RIGHT JOIN.
 * Advanced SQL Usage: I understood the use of SELF JOIN for hierarchical relationships and CROSS JOIN for generating all possible combinations.
 * PostgreSQL Practice: I gained hands-on experience in writing and executing SQL queries in PostgreSQL / pgAdmin.
-
 ---
 
