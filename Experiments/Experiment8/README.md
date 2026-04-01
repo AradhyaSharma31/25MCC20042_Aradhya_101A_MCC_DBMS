@@ -66,7 +66,8 @@ INSERT INTO Employees VALUES
 ```
 ## Employees table
 
-![Output](images/employees.jpg)
+<img width="592" height="239" alt="image" src="https://github.com/user-attachments/assets/4cecaed9-4e4f-4d13-bb9a-f6cbee423e8f" />
+
 ---
 
 ### Step 1: Insert Stored Procedure
@@ -93,7 +94,9 @@ $$;
 CALL add_employee(9, 'Ankit', 2, 'Engineering', 65000);
 ```
 ### Output: after insert data  
-![Output](images/insert.jpg)
+
+<img width="590" height="265" alt="image" src="https://github.com/user-attachments/assets/ba36ff66-5abe-4aea-ae6b-1ed2df373b84" />
+
 ---
 
 ### Step 2: Update Stored Procedure
@@ -139,7 +142,10 @@ END;
 $$
 ```
 ### Output : after update salary of id 3 
-![Output](images/update.jpg)
+<img width="591" height="263" alt="image" src="https://github.com/user-attachments/assets/7d0df61b-0942-4334-9a71-4f32b92e1904" />
+
+<img width="434" height="104" alt="image" src="https://github.com/user-attachments/assets/cd227026-46b7-4547-ba88-264396b1f7f7" />
+
 ---
 
 ### Step 3: Delete Stored Procedure
@@ -163,7 +169,8 @@ $$;
 CALL delete_employee(5);
 ```
 ### Output : after deleting data of id 5 
-![Output](images/delete.jpg)
+<img width="589" height="241" alt="image" src="https://github.com/user-attachments/assets/1f276a45-7076-4657-aa41-5fa7059c77f8" />
+
 ---
 
 
@@ -176,7 +183,3 @@ CALL delete_employee(5);
 * Gained hands-on experience in PostgreSQL
 
 ---
-
-## Result
-
-This experiment demonstrates how stored procedures can be used to perform efficient and reusable database operations on an Employees table.
